@@ -1,4 +1,4 @@
 # web-proffy
 
-### Next level week #2
--NodeJS, React: ReactJS, React Native, Typescript 
+### Next level week #2  - Rocketseat
+-NodeJS, Expo, React: ReactJS, React Native, Typescript 
