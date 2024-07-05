@@ -1,5 +1,5 @@
 # Etapa de build
-FROM node:14 AS build
+FROM node:16 AS build
 
 # Definir o diretório de trabalho dentro do contêiner
 WORKDIR /app
@@ -13,8 +13,8 @@ RUN yarn install
 # Copiar o restante do código da aplicação
 COPY . .
 
-# Construir a aplicação para produção com a variável de ambiente definida no comando
-RUN NODE_OPTIONS=--openssl-legacy-provider yarn build
+# Construir a aplicação para produção
+RUN yarn build
 
 # Etapa de produção
 FROM nginx:alpine
