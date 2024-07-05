@@ -4,17 +4,20 @@ FROM node:14 AS build
 # Definir o diretório de trabalho dentro do contêiner
 WORKDIR /app
 
-# Copiar o package.json e o package-lock.json para o diretório de trabalho
-COPY package*.json ./
+# Copiar o package.json e o yarn.lock para o diretório de trabalho
+COPY package.json yarn.lock ./
 
-# Instalar as dependências
-RUN npm install
+# Instalar as dependências usando yarn
+RUN yarn install
+
+# Definir a variável de ambiente para resolver o problema de OpenSSL
+ENV NODE_OPTIONS=--openssl-legacy-provider
 
 # Copiar o restante do código da aplicação
 COPY . .
 
 # Construir a aplicação para produção
-RUN npm run build
+RUN yarn build
 
 # Etapa de produção
 FROM nginx:alpine
