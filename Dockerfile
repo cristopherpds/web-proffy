@@ -26,7 +26,7 @@ COPY --from=build /app/build /usr/share/nginx/html/build
 COPY nginx.conf /etc/nginx/nginx.conf
 
 # Expor a porta que o Nginx irá rodar
-EXPOSE 80
+EXPOSE 8080
 
 # Comando para rodar o Nginx
 CMD ["nginx", "-g", "daemon off;"]
