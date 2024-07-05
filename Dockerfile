@@ -20,7 +20,7 @@ RUN yarn build
 FROM nginx:alpine
 
 # Copiar os arquivos de build para o diretório padrão do Nginx
-COPY --from=build /app/build /usr/share/nginx/html
+COPY --from=build /app/build /usr/share/nginx/html/build
 
 # Copiar o arquivo de configuração do Nginx
 COPY nginx.conf /etc/nginx/nginx.conf
