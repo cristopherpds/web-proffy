@@ -10,14 +10,11 @@ COPY package.json yarn.lock ./
 # Instalar as dependências usando yarn
 RUN yarn install
 
-# Definir a variável de ambiente para resolver o problema de OpenSSL
-ENV NODE_OPTIONS=--openssl-legacy-provider
-
 # Copiar o restante do código da aplicação
 COPY . .
 
-# Construir a aplicação para produção
-RUN yarn build
+# Construir a aplicação para produção com a variável de ambiente definida no comando
+RUN NODE_OPTIONS=--openssl-legacy-provider yarn build
 
 # Etapa de produção
 FROM nginx:alpine
