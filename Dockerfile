@@ -13,6 +13,7 @@ RUN yarn install
 # Copiar o restante do código da aplicação
 COPY . .
 
+CMD ["export NODE_OPTIONS=--openssl-legacy-provider"]
 # Construir a aplicação para produção
 RUN yarn build
 
