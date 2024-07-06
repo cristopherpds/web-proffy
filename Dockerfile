@@ -1,19 +1,18 @@
-# Etapa de build
-FROM node:16 AS build
+# Etapa de construção
+FROM node:14-alpine as build
 
-# Definir o diretório de trabalho dentro do contêiner
-WORKDIR /app
+WORKDIR /src
 
-# Copiar o package.json e o yarn.lock para o diretório de trabalho
+# Instalar dependências
 COPY package.json yarn.lock ./
-
-# Instalar as dependências usando yarn
 RUN yarn install
 
 # Copiar o restante do código da aplicação
 COPY . .
 
-CMD ["export NODE_OPTIONS=--openssl-legacy-provider"]
+# Definir a variável de ambiente para resolver o problema de hash
+ENV NODE_OPTIONS=--openssl-legacy-provider
+
 # Construir a aplicação para produção
 RUN yarn build
 
@@ -21,7 +20,7 @@ RUN yarn build
 FROM nginx:alpine
 
 # Copiar os arquivos de build para o diretório padrão do Nginx
-COPY --from=build /app/build /usr/share/nginx/html/build
+COPY --from=build ./build /usr/share/nginx/html/build
 
 # Copiar o arquivo de configuração do Nginx
 COPY nginx.conf /etc/nginx/nginx.conf
