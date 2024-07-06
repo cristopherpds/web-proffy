@@ -10,9 +10,6 @@ RUN yarn install
 # Copiar o restante do código da aplicação
 COPY . .
 
-# Definir a variável de ambiente para resolver o problema de hash
-ENV NODE_OPTIONS=--openssl-legacy-provider
-
 # Construir a aplicação para produção
 RUN yarn build
 
@@ -20,10 +17,7 @@ RUN yarn build
 FROM nginx:alpine
 
 # Copiar os arquivos de build para o diretório padrão do Nginx
-COPY --from=build ./build /usr/share/nginx/html/build
-
-# Copiar o arquivo de configuração do Nginx
-COPY nginx.conf /etc/nginx/nginx.conf
+COPY --from=build /src/build /usr/share/nginx/html
 
 # Expor a porta que o Nginx irá rodar
 EXPOSE 80
